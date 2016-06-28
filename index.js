@@ -1,435 +1,119 @@
-var seamlessImmutableJs = require('seamless-immutable');
-var immutableJs = require('immutable');
-var moriJs = require('mori');
+/* eslint no-console: 0 */
+const fs = require('fs');
+const {repeats, test} = require('./src/test');
+const {
+  objectGetNative,
+  objectGetSeamlessImmutableJs,
+  objectGetImmutableJs,
+  objectGetMoriJs,
+  objectGetCrio,
+  arrayGetNative,
+  arrayGetSeamlessImmutableJs,
+  arrayGetImmutableJs,
+  arrayGetMoriJs,
+  arrayGetCrio,
+} = require('./src/get');
 
-var REPEATS;
-var repeats = [1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000];
+const {
+  objectGetInNative,
+  objectGetInSeamlessImmutableJs,
+  objectGetInImmutableJs,
+  objectGetInMoriJs,
+  objectGetInCrio,
+  arrayGetInNative,
+  arrayGetInSeamlessImmutableJs,
+  arrayGetInImmutableJs,
+  arrayGetInMoriJs,
+  arrayGetInCrio,
+} = require('./src/getin');
 
-function getFormatedRepeats() {
-    switch(REPEATS) {
-        case 1000:     return '    1000';
-        case 5000:     return '    5000';
-        case 10000:    return '   10000';
-        case 50000:    return '   50000';
-        case 100000:   return '  100000';
-        case 500000:   return '  500000';
-        case 1000000:  return ' 1000000';
-        case 5000000:  return ' 5000000';
-    }
-}
+const {
+  objectSetNative,
+  objectSetSeamlessImmutableJs,
+  objectSetImmutableJs,
+  objectSetMoriJs,
+  objectSetCrio,
+  arraySetNative,
+  arraySetSeamlessImmutableJs,
+  arraySetImmutableJs,
+  arraySetMoriJs,
+  arraySetCrio,
+} = require('./src/set');
 
-function test(callback) {
-    for(var i = 0; i < repeats.length; i++) {
-        REPEATS = repeats[i]
-        var startTime = Date.now();
-        callback();
-        var testTime = Date.now() - startTime;
-        console.log(getFormatedRepeats() + ' / ' + testTime);
-        global.gc();
-    }
-}
+const {
+  objectSetInNative,
+  objectSetInSeamlessImmutableJs,
+  objectSetInImmutableJs,
+  objectSetInMoriJs,
+  objectSetInCrio,
+  arraySetInNative,
+  arraySetInSeamlessImmutableJs,
+  arraySetInImmutableJs,
+  arraySetInMoriJs,
+  arraySetInCrio,
+} = require('./src/setin');
 
-//== get ==
+const header = () => `Benchmark,${repeats.join(',')}`;
 
-function objectGetNative() {
-    var obj = {
-        value : Math.random()
-    };
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.value;
-    }
-}
+console.log('starting benchmarks...');
 
-function objectGetSeamlessImmutableJs() {
-    var obj = seamlessImmutableJs.from({
-        value : Math.random()
-    });
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.value;
-    }
-}
+const results = [];
+const logAndSave = (it) => {
+  results.push(it);
+  console.log(it);
+};
+// header
+logAndSave(header());
+// object get tests
+logAndSave(test('[get] Object Native', objectGetNative));
+logAndSave(test('[get] Object Seamless-immutable', objectGetSeamlessImmutableJs));
+logAndSave(test('[get] Object Immutable.js', objectGetImmutableJs));
+logAndSave(test('[get] Object Mori.js', objectGetMoriJs));
+logAndSave(test('[get] Object Crio', objectGetCrio));
+// array get tests
+logAndSave(test('[get] Array Native', arrayGetNative));
+logAndSave(test('[get] Array Seamless-immutable.js', arrayGetSeamlessImmutableJs));
+logAndSave(test('[get] Array Immutable.js', arrayGetImmutableJs));
+logAndSave(test('[get] Array Mori.js', arrayGetMoriJs));
+logAndSave(test('[get] Array Crio', arrayGetCrio));
+// object get in tests
+logAndSave(test('[get-in] Object Native', objectGetInNative));
+logAndSave(test('[get-in] Object Seamless-immutable', objectGetInSeamlessImmutableJs));
+logAndSave(test('[get-in] Object Immutable.js', objectGetInImmutableJs));
+logAndSave(test('[get-in] Object Mori.js', objectGetInMoriJs));
+logAndSave(test('[get-in] Object Crio', objectGetInCrio));
+// array get in tests
+logAndSave(test('[get-in] Array Native', arrayGetInNative));
+logAndSave(test('[get-in] Array Seamless-immutable.js', arrayGetInSeamlessImmutableJs));
+logAndSave(test('[get-in] Array Immutable.js', arrayGetInImmutableJs));
+logAndSave(test('[get-in] Array Mori.js', arrayGetInMoriJs));
+logAndSave(test('[get-in] Array Crio', arrayGetInCrio));
+// object set tests
+logAndSave(test('[set] Object Native', objectSetNative));
+logAndSave(test('[set] Object Seamless-immutable', objectSetSeamlessImmutableJs));
+logAndSave(test('[set] Object Immutable.js', objectSetImmutableJs));
+logAndSave(test('[set] Object Mori.js', objectSetMoriJs));
+logAndSave(test('[set] Object Crio', objectSetCrio));
+// array set tests
+logAndSave(test('[set] Array Native', arraySetNative));
+logAndSave(test('[set] Array Seamless-immutable.js', arraySetSeamlessImmutableJs));
+logAndSave(test('[set] Array Immutable.js', arraySetImmutableJs));
+logAndSave(test('[set] Array Mori.js', arraySetMoriJs));
+logAndSave(test('[set] Array Crio', arraySetCrio));
+// object set in tests
+logAndSave(test('[set-in] Object Native', objectSetInNative));
+logAndSave(test('[set-in] Object Seamless-immutable', objectSetInSeamlessImmutableJs));
+logAndSave(test('[set-in] Object Immutable.js', objectSetInImmutableJs));
+logAndSave(test('[set-in] Object Mori.js', objectSetInMoriJs));
+logAndSave(test('[set-in] Object Crio', objectSetInCrio));
+// array set in tests
+logAndSave(test('[set-in] Array Native', arraySetInNative));
+logAndSave(test('[set-in] Array Seamless-immutable.js', arraySetInSeamlessImmutableJs));
+logAndSave(test('[set-in] Array Immutable.js', arraySetInImmutableJs));
+logAndSave(test('[set-in] Array Mori.js', arraySetInMoriJs));
+logAndSave(test('[set-in] Array Crio', arraySetInCrio));
 
-function objectGetImmutableJs() {
-    var obj = new immutableJs.fromJS({
-        value : Math.random()
-    });
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.get('value');
-    }
-}
+// write to file
+fs.writeFileSync('results.csv', results.join('\n'), 'utf8');
 
-function objectGetMoriJs() {
-    var obj = moriJs.hashMap('value', Math.random());
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.get(obj, 'value');
-    }
-}
-
-function arrayGetNative() {
-    var arr = [
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ];
-    var value;
-    var maxIndex = arr.length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr[~~(Math.random() * maxIndex)];
-    }
-}
-
-function arrayGetSeamlessImmutableJs() {
-    var arr = seamlessImmutableJs.from([
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]);
-    var value;
-    var maxIndex = arr.length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr[~~(Math.random() * maxIndex)];
-    }
-}
-
-function arrayGetImmutablejs() {
-    var arr = new immutableJs.fromJS([
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]);
-    var value;
-    var maxIndex = arr.size - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr.get(~~(Math.random() * maxIndex));
-    }
-}
-
-function arrayGetMoriJs() {
-    var arr = moriJs.vector(Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
-    var value;
-    var maxIndex = moriJs.count(arr) - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.get(arr, ~~(Math.random() * maxIndex));
-    }
-}
-
-//=== getIn ===
-
-function objectGetInNative() {
-    var obj = {
-        data : {
-            value : Math.random()
-        }
-    };
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.data.value;
-    }
-}
-
-function objectGetInSeamlessImmutableJs() {
-    var obj = seamlessImmutableJs.from({
-        data : {
-            value : Math.random()
-        }
-    });
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.data.value;
-    }
-}
-
-function objectGetInImmutableJs() {
-    var obj = immutableJs.Map({
-        data : immutableJs.Map({
-            value : Math.random()
-        })
-    });
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = obj.getIn(['data', 'value']);
-    }
-}
-
-function objectGetInMoriJs() {
-    var obj = moriJs.hashMap('data', moriJs.hashMap('value', Math.random()));
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.getIn(obj, ['data', 'value']);
-    }
-}
-
-function arrayGetInNative() {
-    var arr = [[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]];
-    var value;
-    var maxIndex = arr[0].length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr[0][~~(Math.random() * maxIndex)];
-    }
-}
-
-function arrayGetInSeamlessImmutableJs() {
-    var arr = seamlessImmutableJs.from([[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]]);
-    var value;
-    var maxIndex = arr[0].length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr[0][~~(Math.random() * maxIndex)];
-    }
-}
-
-function arrayGetInImmutableJs() {
-    var arr = new immutableJs.fromJS([[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]]);
-    var value;
-    var maxIndex = arr.get(0).size - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = arr.getIn([0, ~~(Math.random() * maxIndex)]);
-    }
-}
-
-function arrayGetInMoriJs() {
-    var arr = moriJs.vector(moriJs.vector(Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
-    var value;
-    var maxIndex = moriJs.count(moriJs.get(arr, 0)) - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.getIn(arr, [0, ~~(Math.random() * maxIndex)]);
-    }
-}
-
-//== set ==
-
-function objectSetNative() {
-    var obj = {
-        value : Math.random()
-    };
-    for(var i = 0; i < REPEATS; i++) {
-        obj = Object.assign({}, obj, {
-            value : Math.random()
-        });
-    }
-}
-
-function objectSetSeamlessImmutableJs() {
-    var obj = seamlessImmutableJs.from({
-        value : Math.random()
-    });
-    for(var i = 0; i < REPEATS; i++) {
-        obj.set('value', Math.random());
-    }
-}
-
-
-function objectSetImmutableJs() {
-    var obj = seamlessImmutableJs.from({
-        value : Math.random()
-    });
-    for(var i = 0; i < REPEATS; i++) {
-        obj.set('value', Math.random());
-    }
-}
-
-function objectSetMoriJs() {
-    var obj = moriJs.hashMap('value', Math.random());
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        moriJs.assoc(obj, 'value', Math.random());
-    }
-}
-
-function arraySetNative() {
-    var arr = [
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ];
-    var maxIndex = arr.length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = [].concat(arr);
-        arr[~~(Math.random() * maxIndex)] = Math.random();
-    }
-}
-
-function arraySetSeamlessImmutableJs() {
-    var arr = seamlessImmutableJs.from([
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]);
-    var maxIndex = arr.length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr.set(~~(Math.random() * maxIndex), Math.random());
-    }
-}
-
-function arraySetImmutableJs() {
-    var arr = new immutableJs.fromJS([
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]);
-    var maxIndex = arr.size - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = arr.set(~~(Math.random() * maxIndex), Math.random());
-    }
-}
-
-function arraySetMoriJs() {
-    var arr = moriJs.vector(Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
-    var value;
-    var maxIndex = moriJs.count(arr) - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.assoc(arr, ~~(Math.random() * maxIndex), Math.random());
-    }
-}
-
-//== setIn ==
-
-function objectSetInNative() {
-    var obj = {
-        data : {
-            value : Math.random()
-        }
-    };
-    for(var i = 0; i < REPEATS; i++) {
-        obj = Object.assign({}, obj, {
-            data : Object.assign({}, obj.data, {
-                value : Math.random()
-            })
-        });
-    }
-}
-
-function objectSetInSeamlessImmutableJs() {
-    var obj = seamlessImmutableJs.from({
-        data : {
-            value : Math.random()
-        }
-    });
-    for(var i = 0; i < REPEATS; i++) {
-        obj = obj.setIn(['data', 'value'], Math.random());
-    }
-}
-
-function objectSetInImmutableJs() {
-    var obj = immutableJs.Map({
-        data : immutableJs.Map({
-            value : Math.random()
-        })
-    });
-    for(var i = 0; i < REPEATS; i++) {
-        obj = obj.setIn(['data', 'value'], Math.random());
-    }
-}
-
-function objectSetInMoriJs() {
-    var obj = moriJs.hashMap('data', moriJs.hashMap('value', Math.random()));
-    var value;
-    for(var i = 0; i < REPEATS; i++) {
-        value = moriJs.assocIn(obj, ['data', 'value'], Math.random());
-    }
-}
-
-function arraySetInNative() {
-    var arr = [[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]];
-    var maxIndex = arr[0].length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = [].concat(arr);
-        arr[0] = [].concat(arr[0]);
-        arr[0][~~(Math.random() * maxIndex)] = Math.random();
-    }
-}
-
-function arraySetInSeamlessImmutableJs() {
-    var arr = seamlessImmutableJs.from([[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]]);
-    var maxIndex = arr[0].length - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = arr.setIn([0, ~~(Math.random() * maxIndex)], Math.random());
-    }
-}
-
-function arraySetInImmutableJs() {
-    var arr = new immutableJs.fromJS([[
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random()
-    ]]);
-    var maxIndex = arr.get(0).size - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = arr.setIn([0, ~~(Math.random() * maxIndex)], Math.random());
-    }
-}
-
-function arraySetInMoriJs() {
-    var arr = moriJs.vector(moriJs.vector(Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
-    var maxIndex = moriJs.count(moriJs.get(arr, 0)) - 1;
-    for(var i = 0; i < REPEATS; i++) {
-        arr = moriJs.assocIn(arr, [0, ~~(Math.random() * maxIndex)], Math.random());
-    }
-}
-
-console.log('[get] Object Native (repeats / ms):');
-test(objectGetNative);
-console.log('[get] Object Seamless-immutable.js (repeats / ms): ');
-test(objectGetSeamlessImmutableJs);
-console.log('[get] Object Immutable.js (repeats / ms):');
-test(objectGetImmutableJs);
-console.log('[get] Object Mori.js (repeats / ms):');
-test(objectGetMoriJs);
-console.log('[get] Array Native (repeats / ms):');
-test(arrayGetNative);
-console.log('[get] Array Seamless-immutable.js (repeats / ms):');
-test(arrayGetSeamlessImmutableJs);
-console.log('[get] Array Immutable.js (repeats / ms):');
-test(arrayGetImmutablejs);
-console.log('[get] Array Mori.js (repeats / ms):');
-test(arrayGetMoriJs);
-
-console.log('[getIn] Object Native. GetIn (repeats / ms):');
-test(objectGetInNative);
-console.log('[getIn] Object Seamless-immutable (repeats / ms):');
-test(objectGetInSeamlessImmutableJs);
-console.log('[getIn] Object Immutable.js (repeats / ms):');
-test(objectGetInImmutableJs);
-console.log('[getIn] Object Mori.js (repeats / ms):');
-test(objectGetInMoriJs);
-console.log('[getIn] Array Native (repeats / ms):');
-test(arrayGetInNative);
-console.log('[getIn] Array Seamless-immutable.js (repeats / ms):');
-test(arrayGetInSeamlessImmutableJs);
-console.log('[getIn] Array Immutable.js (repeats / ms):');
-test(arrayGetInImmutableJs);
-console.log('[getIn] Array Mori.js (repeats / ms):');
-test(arrayGetInMoriJs);
-
-console.log('[set] Object Native (repeats / ms):');
-test(objectSetNative);
-console.log('[set] Object Seamless-immutable.js (repeats / ms):');
-test(objectSetSeamlessImmutableJs);
-console.log('[set] Object Immutable.js (repeats / ms):');
-test(objectSetImmutableJs);
-console.log('[set] Object Mori.js (repeats / ms):');
-test(objectSetMoriJs);
-console.log('[set] Array Native (repeats / ms):');
-test(arraySetNative);
-console.log('[set] Array Seamless-immutable.js (repeats / ms):');
-test(arraySetSeamlessImmutableJs);
-console.log('[set] Array Immutable.js (repeats / ms):');
-test(arraySetImmutableJs);
-console.log('[set] Array Mori.js (repeats / ms):');
-test(arraySetMoriJs);
-
-console.log('[setIn] Object Native (repeats / ms):');
-test(objectSetInNative);
-console.log('[setIn] Object Seamless-immutable.js (repeats / ms):');
-test(objectSetInSeamlessImmutableJs);
-console.log('[setIn] Object Immutable.js (repeats / ms):');
-test(objectSetInImmutableJs);
-console.log('[setIn] Object Mori.js (repeats / ms):');
-test(objectSetInMoriJs);
-console.log('[setIn] Array Native (repeats / ms):');
-test(arraySetInNative);
-console.log('[setIn] Array Seamless-immutable.js (repeats / ms):');
-test(arraySetInSeamlessImmutableJs);
-console.log('[setIn] Array Immutable.js (repeats / ms):');
-test(arraySetInImmutableJs);
-console.log('[setIn] Array Mori.js (repeats / ms):');
-test(arraySetInMoriJs);
+console.log('benchmarks done! Results saved to results.csv');
