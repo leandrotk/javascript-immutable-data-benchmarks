@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "crio": "^2.1.2",
+    "crio": "^2.6.0",
     "immutable": "^3.8.1",
     "mori": "^0.3.2",
     "seamless-immutable": "^6.1.0"
