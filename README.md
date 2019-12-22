@@ -9,6 +9,8 @@
 
 ## Results
 
+Documented in [this sheets](https://docs.google.com/spreadsheets/d/1wnQe7aeL46OtjlgyhhW2z_g8Vx1mLV8nMgdjvGLDZfM/edit?usp=sharing).
+
 ![Object.get results](results/get.png)
 ![Object.getIn results](results/getin.png)
 ![Object.set results](results/set.png)
