@@ -1,100 +1,40 @@
-/* eslint no-unused-vars: 0 */
-const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
-const moriJs = require('mori');
-const crio = require('crio').default;
-
-/**
- * Data
- */
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
 
-/**
- * Object
- */
-
+// Native Object
 exports.objectGetNative = (cycles) => {
-  const obj = {value};
+  const obj = { value };
   for (let i = 0; i < cycles; i++) {
-    const val = obj.value;
+    obj.value;
   }
 };
 
-exports.objectGetSeamlessImmutableJs = (cycles) => {
-  const obj = seamlessImmutableJs.from({value});
-  for (let i = 0; i < cycles; i++) {
-    const val = obj.value;
-  }
-};
-
+// Immutable Object
 exports.objectGetImmutableJs = (cycles) => {
-  const obj = ImmutableJs.fromJS({value});
+  const obj = ImmutableJs.fromJS({ value });
   for (let i = 0; i < cycles; i++) {
-    const val = obj.get('value');
+    obj.get('value');
   }
 };
 
-exports.objectGetMoriJs = (cycles) => {
-  const obj = moriJs.hashMap('value', value);
-  for (let i = 0; i < cycles; i++) {
-    const val = moriJs.get(obj, 'value');
-  }
-};
-
-exports.objectGetCrio = (cycles) => {
-  const obj = crio({value});
-  for (let i = 0; i < cycles; i++) {
-    const val = obj.value;
-  }
-};
-
-/**
- * Array
- */
-
+// Native Array
 exports.arrayGetNative = (cycles) => {
   const arr = array;
   const maxIndex = arr.length - 1;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
-    const val = arr[index];
+    arr[index];
   }
 };
 
-exports.arrayGetSeamlessImmutableJs = (cycles) => {
-  const arr = seamlessImmutableJs.from(array);
-  const maxIndex = arr.length - 1;
-  for (let i = 0; i < cycles; i++) {
-    const index = ~~(Math.random() * maxIndex);
-    const val = arr[index];
-  }
-};
-
+// Immutable Array
 exports.arrayGetImmutableJs = (cycles) => {
   const arr = ImmutableJs.fromJS(array);
   const maxIndex = arr.size - 1;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
-    const val = arr.get(index);
-  }
-};
-
-exports.arrayGetMoriJs = (cycles) => {
-  const arr = moriJs.vector(...array);
-  const maxIndex = moriJs.count(arr) - 1;
-  for (let i = 0; i < cycles; i++) {
-    const index = ~~(Math.random() * maxIndex);
-    const val = moriJs.get(arr, index);
-  }
-};
-
-exports.arrayGetCrio = (cycles) => {
-  const arr = crio(array);
-  const maxIndex = arr.length - 1;
-  for (let i = 0; i < cycles; i++) {
-    const index = ~~(Math.random() * maxIndex);
-    const val = arr[index];
+    arr.get(index);
   }
 };
