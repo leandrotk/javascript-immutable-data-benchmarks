@@ -27,8 +27,10 @@ const {
 const {
   objectSetInNative,
   objectSetInImmutableJs,
+  objectImmutableSetFunction,
   arraySetInNative,
   arraySetInImmutableJs,
+  arraySetInImmutableFunction,
 } = require('./src/setin');
 
 const header = () => `Benchmark,${repeats.join(',')}`;
@@ -77,13 +79,15 @@ logAndSave(test('[set] Array Immutable.js set function', arraySet));
 logAndSave(test('[set] Array Immutable.js', arraySetImmutableJs));
 console.log();
 
-// object set in tests
+// object set-in tests
 logAndSave(test('[set-in] Object Native', objectSetInNative));
+logAndSave(test('[set-in] Object Immutable.js set-in function', objectImmutableSetFunction));
 logAndSave(test('[set-in] Object Immutable.js', objectSetInImmutableJs));
 console.log();
 
-// array set in tests
+// array set-in tests
 logAndSave(test('[set-in] Array Native', arraySetInNative));
+logAndSave(test('[set-in] Array Immutable.js set-in function', arraySetInImmutableFunction));
 logAndSave(test('[set-in] Array Immutable.js', arraySetInImmutableJs));
 console.log();
 

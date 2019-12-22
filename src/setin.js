@@ -1,49 +1,62 @@
-const ImmutableJs = require('immutable');
+const { fromJS, setIn } = require('immutable');
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+const immutableArray = fromJS([array]);
+const obj = { data: { value } };
+const immutableObj = fromJS(obj);
+const nestedArray = [array];
+const immutableNestedArray = fromJS(nestedArray);
 
 // Native Object
 exports.objectSetInNative = (cycles) => {
-  const obj = {
-    data: { value },
-  };
   for (let i = 0; i < cycles; i++) {
-    Object.assign({}, obj, {
-      data: Object.assign({}, obj.data, {
-        value: Math.random(),
-      }),
-    });
+    const newObj = {
+      ...obj,
+      data: {
+        ...obj.data,
+        value: Math.random()
+      }
+    };
+  }
+};
+
+// Object immutable set function
+exports.objectImmutableSetFunction = (cycles) => {
+  for (let i = 0; i < cycles; i++) {
+    setIn(obj, ['data', 'value'], Math.random());
   }
 };
 
 // Immutable Object
 exports.objectSetInImmutableJs = (cycles) => {
-  const obj = ImmutableJs.fromJS({
-    data: { value },
-  });
   for (let i = 0; i < cycles; i++) {
-    obj.setIn(['data', 'value'], Math.random());
+    immutableObj.setIn(['data', 'value'], Math.random());
   }
 };
 
 // Native Array
 exports.arraySetInNative = (cycles) => {
-  const arr = [array];
-  const maxIndex = arr[0].length - 1;
   for (let i = 0; i < cycles; i++) {
-    const newArr = [].concat(arr);
-    newArr[0] = [].concat(arr[0]);
-    const index = ~~(Math.random() * maxIndex);
-    newArr[0][index] = Math.random();
+    const newArr = [
+      [
+        Math.random(),
+        ...array,
+      ]
+    ];
+  }
+};
+
+// Array immutable set-in function
+exports.arraySetInImmutableFunction = (cycles) => {
+  for (let i = 0; i < cycles; i++) {
+    setIn(nestedArray, [0, 0], Math.random());
   }
 };
 
 // Immutable Array
 exports.arraySetInImmutableJs = (cycles) => {
-  const arr = ImmutableJs.fromJS([array]);
-  const maxIndex = arr.get(0).size - 1;
   for (let i = 0; i < cycles; i++) {
-    arr.setIn([0, ~~(Math.random() * maxIndex)], Math.random());
+    immutableNestedArray.setIn([0, 0], Math.random());
   }
 };
