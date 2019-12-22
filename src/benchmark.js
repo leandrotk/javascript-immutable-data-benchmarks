@@ -11,6 +11,6 @@ const benchmark = (immutableFn) => (cycles) => {
 };
 
 exports.testBenchmark = (name, immutableFn) =>
-  `${name}: ${cycles.map(benchmark(immutableFn)).join(',')}`;
+  `${name},${cycles.map(benchmark(immutableFn)).join(',')}`;
 
 exports.cycles = cycles;
