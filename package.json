@@ -1,7 +1,7 @@
 {
-  "name": "immutable-benchmarks",
+  "name": "javascript-immutable-data-benchmarks",
   "version": "2.0.0",
-  "description": "Benchmark of Javascript Immutability Libraries",
+  "description": "Benchmark of Javascript vs Immutable.js",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -9,13 +9,11 @@
   },
   "author": "MrCheater",
   "contributors": [
-    "Tim Ermilov <yamalight@gmail.com> (http://codezen.net)"
+    "Tim Ermilov <yamalight@gmail.com> (http://codezen.net)",
+    "TK <leandrotk100@gmail.com> (leandrotk.github.io/tk)"
   ],
   "license": "MIT",
   "dependencies": {
-    "crio": "^2.6.0",
-    "immutable": "^3.8.1",
-    "mori": "^0.3.2",
-    "seamless-immutable": "^6.1.0"
+    "immutable": "^4.0.0-rc.12"
   }
 }

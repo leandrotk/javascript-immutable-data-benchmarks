@@ -1,112 +1,61 @@
-/* eslint no-unused-vars: 0 */
-const seamlessImmutableJs = require('seamless-immutable');
-const ImmutableJs = require('immutable');
-const moriJs = require('mori');
-const crio = require('crio').default;
-
-/**
- * Data
- */
+const { fromJS, setIn } = require('immutable');
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+const obj = { data: { value } };
+const immutableObj = fromJS(obj);
+const nestedArray = [array];
+const immutableNestedArray = fromJS(nestedArray);
 
-/**
- * Object
- */
-
+// Native Object
 exports.objectSetInNative = (cycles) => {
-  const obj = {
-    data: {value},
-  };
   for (let i = 0; i < cycles; i++) {
-    Object.assign({}, obj, {
-      data: Object.assign({}, obj.data, {
-        value: Math.random(),
-      }),
-    });
+    const newObj = {
+      ...obj,
+      data: {
+        ...obj.data,
+        value: Math.random()
+      }
+    };
   }
 };
 
-exports.objectSetInSeamlessImmutableJs = (cycles) => {
-  const obj = seamlessImmutableJs.from({
-    data: {value},
-  });
+// Object immutable set function
+exports.objectImmutableSetFunction = (cycles) => {
   for (let i = 0; i < cycles; i++) {
-    obj.setIn(['data', 'value'], Math.random());
+    setIn(obj, ['data', 'value'], Math.random());
   }
 };
 
+// Immutable Object
 exports.objectSetInImmutableJs = (cycles) => {
-  const obj = ImmutableJs.fromJS({
-    data: {value},
-  });
   for (let i = 0; i < cycles; i++) {
-    obj.setIn(['data', 'value'], Math.random());
+    immutableObj.setIn(['data', 'value'], Math.random());
   }
 };
 
-exports.objectSetInMoriJs = (cycles) => {
-  const obj = moriJs.hashMap('data', moriJs.hashMap('value', value));
-  for (let i = 0; i < cycles; i++) {
-    moriJs.assocIn(obj, ['data', 'value'], Math.random());
-  }
-};
-
-exports.objectSetInCrio = (cycles) => {
-  const obj = crio({
-    data: {value},
-  });
-  for (let i = 0; i < cycles; i++) {
-    obj.setIn(['data', 'value'], Math.random());
-  }
-};
-
-
-/**
- * Array
- */
-
+// Native Array
 exports.arraySetInNative = (cycles) => {
-  const arr = [array];
-  const maxIndex = arr[0].length - 1;
   for (let i = 0; i < cycles; i++) {
-    const newArr = [].concat(arr);
-    newArr[0] = [].concat(arr[0]);
-    const index = ~~(Math.random() * maxIndex);
-    newArr[0][index] = Math.random();
+    const newArr = [
+      [
+        Math.random(),
+        ...array,
+      ]
+    ];
   }
 };
 
-exports.arraySetInSeamlessImmutableJs = (cycles) => {
-  const arr = seamlessImmutableJs.from([array]);
-  const maxIndex = arr[0].length - 1;
+// Array immutable set-in function
+exports.arraySetInImmutableFunction = (cycles) => {
   for (let i = 0; i < cycles; i++) {
-    arr.setIn([0, ~~(Math.random() * maxIndex)], Math.random());
+    setIn(nestedArray, [0, 0], Math.random());
   }
 };
 
+// Immutable Array
 exports.arraySetInImmutableJs = (cycles) => {
-  const arr = ImmutableJs.fromJS([array]);
-  const maxIndex = arr.get(0).size - 1;
   for (let i = 0; i < cycles; i++) {
-    arr.setIn([0, ~~(Math.random() * maxIndex)], Math.random());
-  }
-};
-
-exports.arraySetInMoriJs = (cycles) => {
-  const arr = moriJs.vector(moriJs.vector(...array));
-  const maxIndex = moriJs.count(moriJs.get(arr, 0)) - 1;
-  for (let i = 0; i < cycles; i++) {
-    moriJs.assocIn(arr, [0, ~~(Math.random() * maxIndex)], Math.random());
-  }
-};
-
-exports.arraySetInCrio = (cycles) => {
-  const arr = crio([array]);
-  const maxIndex = arr[0].length - 1;
-  for (let i = 0; i < cycles; i++) {
-    const index = ~~(Math.random() * maxIndex);
-    arr.setIn([0, index], Math.random());
+    immutableNestedArray.setIn([0, 0], Math.random());
   }
 };

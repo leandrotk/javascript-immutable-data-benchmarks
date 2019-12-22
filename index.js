@@ -1,59 +1,39 @@
-/* eslint no-console: 0 */
 const fs = require('fs');
-const {repeats, test} = require('./src/test');
+const { cycles, testBenchmark } = require('./src/benchmark');
+
 const {
   objectGetNative,
-  objectGetSeamlessImmutableJs,
   objectGetImmutableJs,
-  objectGetMoriJs,
-  objectGetCrio,
   arrayGetNative,
-  arrayGetSeamlessImmutableJs,
   arrayGetImmutableJs,
-  arrayGetMoriJs,
-  arrayGetCrio,
 } = require('./src/get');
 
 const {
   objectGetInNative,
-  objectGetInSeamlessImmutableJs,
   objectGetInImmutableJs,
-  objectGetInMoriJs,
-  objectGetInCrio,
   arrayGetInNative,
-  arrayGetInSeamlessImmutableJs,
   arrayGetInImmutableJs,
-  arrayGetInMoriJs,
-  arrayGetInCrio,
 } = require('./src/getin');
 
 const {
   objectSetNative,
-  objectSetSeamlessImmutableJs,
   objectSetImmutableJs,
-  objectSetMoriJs,
-  objectSetCrio,
+  objectSet,
   arraySetNative,
-  arraySetSeamlessImmutableJs,
+  arraySet,
   arraySetImmutableJs,
-  arraySetMoriJs,
-  arraySetCrio,
 } = require('./src/set');
 
 const {
   objectSetInNative,
-  objectSetInSeamlessImmutableJs,
   objectSetInImmutableJs,
-  objectSetInMoriJs,
-  objectSetInCrio,
+  objectImmutableSetFunction,
   arraySetInNative,
-  arraySetInSeamlessImmutableJs,
   arraySetInImmutableJs,
-  arraySetInMoriJs,
-  arraySetInCrio,
+  arraySetInImmutableFunction,
 } = require('./src/setin');
 
-const header = () => `Benchmark,${repeats.join(',')}`;
+const header = () => `Benchmark,${cycles.join(',')}`;
 
 console.log('starting benchmarks...');
 
@@ -62,56 +42,54 @@ const logAndSave = (it) => {
   results.push(it);
   console.log(it);
 };
+
 // header
 logAndSave(header());
+console.log();
+
 // object get tests
-logAndSave(test('[get] Object Native', objectGetNative));
-logAndSave(test('[get] Object Seamless-immutable', objectGetSeamlessImmutableJs));
-logAndSave(test('[get] Object Immutable.js', objectGetImmutableJs));
-logAndSave(test('[get] Object Mori.js', objectGetMoriJs));
-logAndSave(test('[get] Object Crio', objectGetCrio));
+logAndSave(testBenchmark('[get] Object Native', objectGetNative));
+logAndSave(testBenchmark('[get] Object Immutable.js', objectGetImmutableJs));
+console.log();
+
 // array get tests
-logAndSave(test('[get] Array Native', arrayGetNative));
-logAndSave(test('[get] Array Seamless-immutable.js', arrayGetSeamlessImmutableJs));
-logAndSave(test('[get] Array Immutable.js', arrayGetImmutableJs));
-logAndSave(test('[get] Array Mori.js', arrayGetMoriJs));
-logAndSave(test('[get] Array Crio', arrayGetCrio));
+logAndSave(testBenchmark('[get] Array Native', arrayGetNative));
+logAndSave(testBenchmark('[get] Array Immutable.js', arrayGetImmutableJs));
+console.log();
+
 // object get in tests
-logAndSave(test('[get-in] Object Native', objectGetInNative));
-logAndSave(test('[get-in] Object Seamless-immutable', objectGetInSeamlessImmutableJs));
-logAndSave(test('[get-in] Object Immutable.js', objectGetInImmutableJs));
-logAndSave(test('[get-in] Object Mori.js', objectGetInMoriJs));
-logAndSave(test('[get-in] Object Crio', objectGetInCrio));
+logAndSave(testBenchmark('[get-in] Object Native', objectGetInNative));
+logAndSave(testBenchmark('[get-in] Object Immutable.js', objectGetInImmutableJs));
+console.log();
+
 // array get in tests
-logAndSave(test('[get-in] Array Native', arrayGetInNative));
-logAndSave(test('[get-in] Array Seamless-immutable.js', arrayGetInSeamlessImmutableJs));
-logAndSave(test('[get-in] Array Immutable.js', arrayGetInImmutableJs));
-logAndSave(test('[get-in] Array Mori.js', arrayGetInMoriJs));
-logAndSave(test('[get-in] Array Crio', arrayGetInCrio));
+logAndSave(testBenchmark('[get-in] Array Native', arrayGetInNative));
+logAndSave(testBenchmark('[get-in] Array Immutable.js', arrayGetInImmutableJs));
+console.log();
+
 // object set tests
-logAndSave(test('[set] Object Native', objectSetNative));
-logAndSave(test('[set] Object Seamless-immutable', objectSetSeamlessImmutableJs));
-logAndSave(test('[set] Object Immutable.js', objectSetImmutableJs));
-logAndSave(test('[set] Object Mori.js', objectSetMoriJs));
-logAndSave(test('[set] Object Crio', objectSetCrio));
+logAndSave(testBenchmark('[set] Object Native', objectSetNative));
+logAndSave(testBenchmark('[set] Object Immutable.js set function', objectSet));
+logAndSave(testBenchmark('[set] Object Immutable.js', objectSetImmutableJs));
+console.log();
+
 // array set tests
-logAndSave(test('[set] Array Native', arraySetNative));
-logAndSave(test('[set] Array Seamless-immutable.js', arraySetSeamlessImmutableJs));
-logAndSave(test('[set] Array Immutable.js', arraySetImmutableJs));
-logAndSave(test('[set] Array Mori.js', arraySetMoriJs));
-logAndSave(test('[set] Array Crio', arraySetCrio));
-// object set in tests
-logAndSave(test('[set-in] Object Native', objectSetInNative));
-logAndSave(test('[set-in] Object Seamless-immutable', objectSetInSeamlessImmutableJs));
-logAndSave(test('[set-in] Object Immutable.js', objectSetInImmutableJs));
-logAndSave(test('[set-in] Object Mori.js', objectSetInMoriJs));
-logAndSave(test('[set-in] Object Crio', objectSetInCrio));
-// array set in tests
-logAndSave(test('[set-in] Array Native', arraySetInNative));
-logAndSave(test('[set-in] Array Seamless-immutable.js', arraySetInSeamlessImmutableJs));
-logAndSave(test('[set-in] Array Immutable.js', arraySetInImmutableJs));
-logAndSave(test('[set-in] Array Mori.js', arraySetInMoriJs));
-logAndSave(test('[set-in] Array Crio', arraySetInCrio));
+logAndSave(testBenchmark('[set] Array Native', arraySetNative));
+logAndSave(testBenchmark('[set] Array Immutable.js set function', arraySet));
+logAndSave(testBenchmark('[set] Array Immutable.js', arraySetImmutableJs));
+console.log();
+
+// object set-in tests
+logAndSave(testBenchmark('[set-in] Object Native', objectSetInNative));
+logAndSave(testBenchmark('[set-in] Object Immutable.js set-in function', objectImmutableSetFunction));
+logAndSave(testBenchmark('[set-in] Object Immutable.js', objectSetInImmutableJs));
+console.log();
+
+// array set-in tests
+logAndSave(testBenchmark('[set-in] Array Native', arraySetInNative));
+logAndSave(testBenchmark('[set-in] Array Immutable.js set-in function', arraySetInImmutableFunction));
+logAndSave(testBenchmark('[set-in] Array Immutable.js', arraySetInImmutableJs));
+console.log();
 
 // write to file
 fs.writeFileSync('results.csv', results.join('\n'), 'utf8');
