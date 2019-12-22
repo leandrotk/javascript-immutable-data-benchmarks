@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { repeats, test } = require('./src/test');
+const { cycles, test } = require('./src/test');
 
 const {
   objectGetNative,
@@ -33,7 +33,7 @@ const {
   arraySetInImmutableFunction,
 } = require('./src/setin');
 
-const header = () => `Benchmark,${repeats.join(',')}`;
+const header = () => `Benchmark,${cycles.join(',')}`;
 
 console.log('starting benchmarks...');
 
