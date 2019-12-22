@@ -1,13 +1,13 @@
-const ImmutableJs = require('immutable');
+const { fromJS } = require('immutable');
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+const immutableArray = fromJS([array]);
+const obj = { data: { value } };
+const immutableObj = fromJS(obj);
 
 // Native Object
 exports.objectGetInNative = (cycles) => {
-  const obj = {
-    data: { value },
-  };
   for (let i = 0; i < cycles; i++) {
     obj.data.value;
   }
@@ -15,11 +15,8 @@ exports.objectGetInNative = (cycles) => {
 
 // Immutable Object
 exports.objectGetInImmutableJs = (cycles) => {
-  const obj = ImmutableJs.fromJS({
-    data: { value },
-  });
   for (let i = 0; i < cycles; i++) {
-    obj.getIn(['data', 'value']);
+    immutableObj.getIn(['data', 'value']);
   }
 };
 
@@ -35,10 +32,9 @@ exports.arrayGetInNative = (cycles) => {
 
 // Immutable Array
 exports.arrayGetInImmutableJs = (cycles) => {
-  const arr = ImmutableJs.fromJS([array]);
-  const maxIndex = arr.get(0).size - 1;
+  const maxIndex = immutableArray.get(0).size - 1;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
-    arr.getIn([0, index]);
+    immutableArray.getIn([0, index]);
   }
 };
