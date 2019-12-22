@@ -10,7 +10,7 @@ const benchmark = (immutableFn) => (cycles) => {
   return testTime;
 };
 
-exports.test = (name, immutableFn) =>
+exports.testBenchmark = (name, immutableFn) =>
   `${name}: ${cycles.map(benchmark(immutableFn)).join(',')}`;
 
 exports.cycles = cycles;

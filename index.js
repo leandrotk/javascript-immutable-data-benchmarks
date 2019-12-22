@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { cycles, test } = require('./src/test');
+const { cycles, testBenchmark } = require('./src/benchmark');
 
 const {
   objectGetNative,
@@ -48,47 +48,47 @@ logAndSave(header());
 console.log();
 
 // object get tests
-logAndSave(test('[get] Object Native', objectGetNative));
-logAndSave(test('[get] Object Immutable.js', objectGetImmutableJs));
+logAndSave(testBenchmark('[get] Object Native', objectGetNative));
+logAndSave(testBenchmark('[get] Object Immutable.js', objectGetImmutableJs));
 console.log();
 
 // array get tests
-logAndSave(test('[get] Array Native', arrayGetNative));
-logAndSave(test('[get] Array Immutable.js', arrayGetImmutableJs));
+logAndSave(testBenchmark('[get] Array Native', arrayGetNative));
+logAndSave(testBenchmark('[get] Array Immutable.js', arrayGetImmutableJs));
 console.log();
 
 // object get in tests
-logAndSave(test('[get-in] Object Native', objectGetInNative));
-logAndSave(test('[get-in] Object Immutable.js', objectGetInImmutableJs));
+logAndSave(testBenchmark('[get-in] Object Native', objectGetInNative));
+logAndSave(testBenchmark('[get-in] Object Immutable.js', objectGetInImmutableJs));
 console.log();
 
 // array get in tests
-logAndSave(test('[get-in] Array Native', arrayGetInNative));
-logAndSave(test('[get-in] Array Immutable.js', arrayGetInImmutableJs));
+logAndSave(testBenchmark('[get-in] Array Native', arrayGetInNative));
+logAndSave(testBenchmark('[get-in] Array Immutable.js', arrayGetInImmutableJs));
 console.log();
 
 // object set tests
-logAndSave(test('[set] Object Native', objectSetNative));
-logAndSave(test('[set] Object Immutable.js set function', objectSet));
-logAndSave(test('[set] Object Immutable.js', objectSetImmutableJs));
+logAndSave(testBenchmark('[set] Object Native', objectSetNative));
+logAndSave(testBenchmark('[set] Object Immutable.js set function', objectSet));
+logAndSave(testBenchmark('[set] Object Immutable.js', objectSetImmutableJs));
 console.log();
 
 // array set tests
-logAndSave(test('[set] Array Native', arraySetNative));
-logAndSave(test('[set] Array Immutable.js set function', arraySet));
-logAndSave(test('[set] Array Immutable.js', arraySetImmutableJs));
+logAndSave(testBenchmark('[set] Array Native', arraySetNative));
+logAndSave(testBenchmark('[set] Array Immutable.js set function', arraySet));
+logAndSave(testBenchmark('[set] Array Immutable.js', arraySetImmutableJs));
 console.log();
 
 // object set-in tests
-logAndSave(test('[set-in] Object Native', objectSetInNative));
-logAndSave(test('[set-in] Object Immutable.js set-in function', objectImmutableSetFunction));
-logAndSave(test('[set-in] Object Immutable.js', objectSetInImmutableJs));
+logAndSave(testBenchmark('[set-in] Object Native', objectSetInNative));
+logAndSave(testBenchmark('[set-in] Object Immutable.js set-in function', objectImmutableSetFunction));
+logAndSave(testBenchmark('[set-in] Object Immutable.js', objectSetInImmutableJs));
 console.log();
 
 // array set-in tests
-logAndSave(test('[set-in] Array Native', arraySetInNative));
-logAndSave(test('[set-in] Array Immutable.js set-in function', arraySetInImmutableFunction));
-logAndSave(test('[set-in] Array Immutable.js', arraySetInImmutableJs));
+logAndSave(testBenchmark('[set-in] Array Native', arraySetInNative));
+logAndSave(testBenchmark('[set-in] Array Immutable.js set-in function', arraySetInImmutableFunction));
+logAndSave(testBenchmark('[set-in] Array Immutable.js', arraySetInImmutableJs));
 console.log();
 
 // write to file

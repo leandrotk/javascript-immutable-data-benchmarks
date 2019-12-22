@@ -2,7 +2,6 @@ const { fromJS, setIn } = require('immutable');
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-const immutableArray = fromJS([array]);
 const obj = { data: { value } };
 const immutableObj = fromJS(obj);
 const nestedArray = [array];
