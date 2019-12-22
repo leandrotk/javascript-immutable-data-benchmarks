@@ -1,45 +1,59 @@
-const ImmutableJs = require('immutable');
+const { fromJS, set } = require('immutable');
 
 const value = Math.random();
 const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+const immutableArray = fromJS(array);
+const obj = { value };
+const immutableObj = fromJS(obj);
 
 // Native Object
 exports.objectSetNative = (cycles) => {
-  const obj = { value };
   for (let i = 0; i < cycles; i++) {
-    const newValue = Math.random();
-    Object.assign({}, obj, { value: newValue });
+    const newObj = {
+      ...obj,
+      ...{ value: Math.random() }
+    };
+  }
+};
+
+// Native Object with set immutable (https://immutable-js.github.io/immutable-js/docs/#/set)
+exports.objectSet = (cycles) => {
+  for (let i = 0; i < cycles; i++) {
+    set(obj, 'value', Math.random()); // returns an immutable
   }
 };
 
 // Immutable Object
 exports.objectSetImmutableJs = (cycles) => {
-  const obj = ImmutableJs.fromJS({ value });
   for (let i = 0; i < cycles; i++) {
-    const newValue = Math.random();
-    obj.set('value', newValue);
+    const newObj = immutableObj.set('value', Math.random());
   }
 };
 
 // Native Array
 exports.arraySetNative = (cycles) => {
-  const arr = array;
-  const maxIndex = arr.length - 1;
+  const maxIndex = array.length - 1;
   for (let i = 0; i < cycles; i++) {
-    const newArr = [].concat(arr);
+    const newArr = [...array];
     const index = ~~(Math.random() * maxIndex);
-    const newVal = Math.random();
-    newArr[index] = newVal;
+    newArr[index] = Math.random();
+  }
+};
+
+// Array set function
+exports.arraySet = (cycles) => {
+  const maxIndex = array.length - 1;
+  for (let i = 0; i < cycles; i++) {
+    const index = ~~(Math.random() * maxIndex);
+    set(array, index, Math.random());
   }
 };
 
 // Immutable Array
 exports.arraySetImmutableJs = (cycles) => {
-  const arr = ImmutableJs.fromJS(array);
-  const maxIndex = arr.size - 1;
+  const maxIndex = immutableArray.size - 1;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
-    const newVal = Math.random();
-    arr.set(index, newVal);
+    immutableArray.set(index, Math.random());
   }
 };

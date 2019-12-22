@@ -18,7 +18,9 @@ const {
 const {
   objectSetNative,
   objectSetImmutableJs,
+  objectSet,
   arraySetNative,
+  arraySet,
   arraySetImmutableJs,
 } = require('./src/set');
 
@@ -65,11 +67,13 @@ console.log();
 
 // object set tests
 logAndSave(test('[set] Object Native', objectSetNative));
+logAndSave(test('[set] Object Immutable.js set function', objectSet));
 logAndSave(test('[set] Object Immutable.js', objectSetImmutableJs));
 console.log();
 
 // array set tests
 logAndSave(test('[set] Array Native', arraySetNative));
+logAndSave(test('[set] Array Immutable.js set function', arraySet));
 logAndSave(test('[set] Array Immutable.js', arraySetImmutableJs));
 console.log();
 
