@@ -15,3 +15,4 @@ Documented in [this sheets](https://docs.google.com/spreadsheets/d/1wnQe7aeL46Ot
 ![Object.getIn results](results/getin.png)
 ![Object.set results](results/set.png)
 ![Object.setIn results](results/setin.png)
+![fromJS toJS](results/transformation.png)
