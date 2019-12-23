@@ -1,5 +1,6 @@
 const {
   array,
+  nestedArray,
   obj,
   immutableObj,
   immutableArray
@@ -21,11 +22,10 @@ exports.objectGetInImmutableJs = (cycles) => {
 
 // Native Array
 exports.arrayGetInNative = (cycles) => {
-  const arr = [array];
-  const maxIndex = arr[0].length - 1;
+  const maxIndex = nestedArray[0].length - 1;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
-    arr[0][index];
+    nestedArray[0][index];
   }
 };
 
