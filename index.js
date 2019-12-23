@@ -34,6 +34,7 @@ const {
 } = require('./src/setin');
 
 const { objectFromJS, arrayFromJS } = require('./src/fromJS');
+const { objectToJS, arrayToJS } = require('./src/toJS');
 
 const header = () => `Benchmark,${cycles.join(',')}`;
 
@@ -96,6 +97,11 @@ console.log();
 // fromJS
 console.log(testBenchmark('Object fromJS', objectFromJS));
 console.log(testBenchmark('Array fromJS', arrayFromJS));
+console.log();
+
+// toJS
+console.log(testBenchmark('Object toJS', objectToJS));
+console.log(testBenchmark('Array toJS', arrayToJS));
 console.log();
 
 // write to file
