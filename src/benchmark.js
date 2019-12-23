@@ -1,9 +1,12 @@
+const { performance } = require('perf_hooks');
+
 const cycles = [1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000];
 
 const benchmark = (immutableFn) => (cycles) => {
-  const startTime = Date.now();
+  const startTime = performance.now();
   benchmarkByCycle(cycles, immutableFn);
-  const testTime = Date.now() - startTime;
+  const endTime = performance.now();
+  const testTime = endTime - startTime;
 
   global.gc();
 
