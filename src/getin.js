@@ -1,22 +1,21 @@
-const { fromJS } = require('immutable');
-
-const value = Math.random();
-const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-const immutableArray = fromJS([array]);
-const obj = { data: { value } };
-const immutableObj = fromJS(obj);
+const {
+  array,
+  obj,
+  immutableObj,
+  immutableArray
+} = require('./mocks');
 
 // Native Object
 exports.objectGetInNative = (cycles) => {
   for (let i = 0; i < cycles; i++) {
-    obj.data.value;
+    obj.nested1.nested2.value;
   }
 };
 
 // Immutable Object
 exports.objectGetInImmutableJs = (cycles) => {
   for (let i = 0; i < cycles; i++) {
-    immutableObj.getIn(['data', 'value']);
+    immutableObj.getIn(['nested1', 'nested2', 'value']);
   }
 };
 

@@ -1,10 +1,9 @@
-const { fromJS } = require('immutable');
-
-const value = Math.random();
-const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-const immutableArray = fromJS(array);
-const obj = { value };
-const immutableObj = fromJS(obj);
+const {
+  array,
+  obj,
+  immutableObj,
+  immutableArray
+} = require('./mocks');
 
 // Native Object
 exports.objectGetNative = (cycles) => {

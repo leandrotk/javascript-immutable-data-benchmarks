@@ -1,18 +1,8 @@
-const { fromJS } = require('immutable');
-
-const immutableArray = fromJS([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()]);
-const value = Math.random();
-const immutableObject = fromJS({
-  nested1: {
-    nested2: {
-      value
-    }
-  }
-});
+const { immutableArray, immutableObj } = require('./mocks');
 
 exports.objectToJS = (cycles) => {
   for (let i = 0; i < cycles; i++) {
-    immutableObject.toJS();
+    immutableObj.toJS();
   }
 };
 

@@ -1,11 +1,13 @@
-const { fromJS, setIn } = require('immutable');
+const { setIn } = require('immutable');
 
-const value = Math.random();
-const array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-const obj = { data: { value } };
-const immutableObj = fromJS(obj);
-const nestedArray = [array];
-const immutableNestedArray = fromJS(nestedArray);
+const {
+  value,
+  array,
+  obj,
+  immutableObj,
+  nestedArray,
+  immutableNestedArray
+} = require('./mocks');
 
 // Native Object
 exports.objectSetInNative = (cycles) => {
@@ -14,7 +16,7 @@ exports.objectSetInNative = (cycles) => {
       ...obj,
       data: {
         ...obj.data,
-        value: Math.random()
+        value
       }
     };
   }
