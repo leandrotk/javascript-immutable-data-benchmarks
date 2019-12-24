@@ -3,8 +3,8 @@
 ## Running locally
 
 1. Clone this repository
-2. Execute `npm install`
-3. Execute `npm start`
+2. Execute `npm i`
+3. Execute `npm run start`
 4. Results will be saved to `results.csv` file.
 
 ## Results
